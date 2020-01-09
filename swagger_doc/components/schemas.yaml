@@ -1,0 +1,85 @@
+Error:
+  type: object
+  properties:
+    code:
+      type: string
+    message:
+      type: string
+Errors:
+  type: object
+  properties:
+    code:
+      type: string
+    message:
+      type: string
+    errors:
+      type: array
+      items:
+        type: object
+        properties:
+          value:
+            type: string
+          msg:
+            type: string
+          param:
+            type: string
+          location:
+            type: string
+Success:
+  type: object
+Login:
+  type: object
+  properties:
+    email:
+      type: string
+    password:
+      type: string
+  required:
+    - email
+    - password
+Register:
+  type: object
+  properties:
+      name:
+        type: string
+      email:
+        type: string
+      password:
+        type: string
+      confirm_password:
+        type: string
+  required:
+    - name
+    - email
+    - password
+    - confirm_password
+CreatePost:
+  type: object
+  properties:
+      title:
+        type: string
+      desc:
+        type: string
+      files:
+        type: array
+        items:
+          type: string
+  required:
+    - title
+    - description
+    - files
+EditPost:
+  type: object
+  properties:
+      title:
+        type: string
+      desc:
+        type: string
+      files:
+        type: array
+        items:
+          type: string
+  required:
+    - title
+    - description
+    - files

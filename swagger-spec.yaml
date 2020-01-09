@@ -1,0 +1,367 @@
+openapi: 3.0.1
+info:
+  title: Swagger Passport
+  description: This is a sample server for post management
+  termsOfService: 'http://swagger.io/terms/'
+  contact:
+    email: anuj@ourdesignz.in
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+url: 'http://swagger.io'
+servers:
+  - url: 'http://localhost:3000/api'
+    description: Internal staging server for testing
+  - url: 'https://localhost:3000/api'
+    description: Main (production) server
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: string
+                  expiren_in: string
+              example:
+                token: sdfasdfasdfhsakj
+                expires_in: 3600
+        '400':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Register'
+      responses:
+        '201':
+          description: Created
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /post/upload_files:
+    post:
+      tags:
+        - Post
+      summary: To upload images for post
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        '201':
+          description: Created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /post/create:
+    post:
+      tags:
+        - Post
+      summary: To create a Post
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePost'
+      responses:
+        '201':
+          description: Created
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/post/edit/{postId}':
+    put:
+      tags:
+        - Post
+      summary: To Edit a Post
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the post to edit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditPost'
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/post/show/{postId}':
+    get:
+      tags:
+        - Post
+      summary: To show a Post
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the post to edit
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/post/delete/{postId}':
+    delete:
+      tags:
+        - Post
+      summary: To delete a Post
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the post to edit
+      responses:
+        '201':
+          description: OK
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/post/{postId}/comment':
+    post:
+      tags:
+        - Post
+      summary: To creat a Post Comment
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the post to edit
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                comment:
+                  type: string
+              required:
+                - comment
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    Success:
+      description: OK
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Success'
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InternalServerError:
+      description: Internal server Error
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    UnprocessableEntity:
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Errors'
+    Unauthorized:
+      description: Not authorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Errors:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              msg:
+                type: string
+              param:
+                type: string
+              location:
+                type: string
+    Success:
+      type: object
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        confirm_password:
+          type: string
+      required:
+        - name
+        - email
+        - password
+        - confirm_password
+    CreatePost:
+      type: object
+      properties:
+        title:
+          type: string
+        desc:
+          type: string
+        files:
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - description
+        - files
+    EditPost:
+      type: object
+      properties:
+        title:
+          type: string
+        desc:
+          type: string
+        files:
+          type: array
+          items:
+            type: string
+      required:
+        - title
+        - description
+        - files

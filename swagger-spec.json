@@ -1,0 +1,174 @@
+openapi: 3.0.1
+info:
+  title: Swagger Passport
+  description: This is a sample server for post management
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: anuj@ourdesignz.in
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+url: http://swagger.io
+servers:
+  - url: http://localhost:3000/api
+    description: Internal staging server for testing
+  - url: https://localhost:3000/api
+    description: Main (production) server
+paths:
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      summary: Login the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+      responses:
+        "200":
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: string
+                  expiren_in: string
+              example:
+                token: sdfasdfasdfhsakj
+                expires_in: 3600
+        "400": {}
+        "422": {}
+        "500": {}
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      summary: Register the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: {}
+      responses:
+        "201":
+          description: Created
+        "422": {}
+        "500": {}
+  /post/upload_files:
+    post:
+      tags:
+        - Post
+      summary: To upload images for post
+      security:
+        - BearerAuth
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                files:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+      responses:
+        "201":
+          description: Created
+        "422": {}
+        "500": {}
+  /post/create:
+    post:
+      tags:
+        - Post
+      summary: To create a Post
+      requestBody:
+        required: true
+        content: null
+        application/json: {}
+      responses:
+        "201":
+          description: Created
+        "422": {}
+        "500": {}
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  responses:
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema: {}
+    InternalServerError:
+      description: Internal server Error
+      content:
+        application/json:
+          schema: {}
+    UnprocessableEntity:
+      description: Unprocessable Entity
+      content:
+        application/json:
+          schema: {}
+  schemas:
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+    Errors:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+              msg:
+                type: string
+              param:
+                type: string
+              location:
+                type: string
+    Login:
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+      required:
+        - email
+        - password
+    Register:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        confirm_password:
+          type: string
+      required:
+        - name
+        - email
+        - password
+        - confirm_password
+    UploadPostFiles: null

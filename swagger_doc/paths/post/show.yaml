@@ -1,0 +1,24 @@
+get:
+  tags:
+    - Post
+  summary: To show a Post
+  security:
+    - BearerAuth: []
+  parameters:
+    - in: path
+      name: postId
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the post to edit
+  responses:
+    200:
+      $ref: '#/components/responses/Success'
+    401:
+      $ref: '#/components/responses/Unauthorized'
+    403:
+      $ref: '#/components/responses/Forbidden'
+    404:
+      $ref: '#/components/responses/NotFound'
+    500:
+      $ref: '#/components/responses/InternalServerError'

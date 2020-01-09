@@ -1,0 +1,26 @@
+post:
+  tags:
+    - Post
+  summary: To upload profile image of user
+  security:
+    - BearerAuth: []
+  requestBody:
+    content:
+      multipart/form-data:
+        schema:
+          type: object
+          properties:
+            files:
+              type: array
+              items:
+                type: string
+                format: binary
+  responses:
+    201:
+      description: 'Created'
+    401:
+      $ref: '#/components/responses/Unauthorized'
+    422:
+      $ref: '#/components/responses/UnprocessableEntity'
+    500:
+      $ref: '#/components/responses/InternalServerError'

@@ -1,0 +1,37 @@
+post:
+  tags:
+    - Post
+  summary: To creat a Post Comment
+  security:
+    - BearerAuth: []
+  parameters:
+    - in: path
+      name: postId
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the post to edit
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            comment:
+              type: string
+          required:
+            - comment
+  responses:
+    200:
+      $ref: '#/components/responses/Success'
+    401:
+      $ref: '#/components/responses/Unauthorized'
+    403:
+      $ref: '#/components/responses/Forbidden'
+    404:
+      $ref: '#/components/responses/NotFound'
+    422:
+      $ref: '#/components/responses/UnprocessableEntity'
+    500:
+      $ref: '#/components/responses/InternalServerError'

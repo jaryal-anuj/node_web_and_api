@@ -1,0 +1,9 @@
+title: Swagger Passport
+description: 'This is a sample server for post management'
+termsOfService: http://swagger.io/terms/
+contact:
+  email: anuj@ourdesignz.in
+license:
+  name: Apache 2.0
+  url: http://www.apache.org/licenses/LICENSE-2.0.html
+version: 1.0.0

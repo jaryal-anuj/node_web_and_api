@@ -1,0 +1,36 @@
+Success:
+  description: OK
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Success'
+NotFound:
+  description: Not found
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Error'
+InternalServerError:
+  description: Internal server Error
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Error'
+UnprocessableEntity:
+  description: Unprocessable Entity
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Errors'
+Unauthorized:
+  description: Not authorized
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Error'
+Forbidden:
+  description: Forbidden
+  content:
+    application/json:
+      schema:
+        $ref: '#/components/schemas/Error'

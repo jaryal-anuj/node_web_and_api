@@ -1,0 +1,4 @@
+- name: Auth
+  description: Everything about your Pets
+- name: User
+  description: Operations about user

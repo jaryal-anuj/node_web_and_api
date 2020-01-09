@@ -1,0 +1,43 @@
+<%- contentFor('content') %>
+<div class="container" style="margin-top:30px;">
+    <div class="row">
+       <%- include('../shared/user_profile.ejs') %>
+      <div class="col-sm-8 card">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Create post</h5>
+            <form class="" action="/post/store?_csrf=<%= csrfToken %>" method="post"  >
+              <div class="form-label-group">
+                <label for="inputTitle">Title</label>
+                <input type="text" id="inputTitle" name="title" class="form-control" placeholder="Your title" value="<%= oldInput?oldInput.title:'' %>"  autofocus>
+                
+                <% if(errors && errors.title) { %>
+                    <div class="error"><%= errors.title.msg %></div>
+                <% } %>
+              </div>
+              <br>
+              <div class="form-label-group">
+                <label for="inputDesc">Description</label>
+                <textarea id="inputDesc" rows="15" name="desc" class="form-control" placeholder="Enter description" ><%= oldInput?oldInput.desc:'' %></textarea>
+                <% if(errors && errors.desc) { %>
+                    <div class="error"><%= errors.desc.msg %></div>
+                <% } %>
+              </div>
+              <br>
+              <div class="form-label-group">
+                <label for="inputFile">Files</label>
+                <input type="file" id="inputFile"  name="files" class="form-control post_images" multiple >
+                <div class="uploaded-file"></div>
+                <% if(errors && errors.file) { %>
+                    <div class="error"><%= errors.file %></div>
+                <% } %>
+              </div>
+
+              <br>
+              <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

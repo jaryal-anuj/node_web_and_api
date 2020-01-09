@@ -1,0 +1,21 @@
+post:
+  tags:
+    - Post
+  summary: To create a Post
+  security:
+    - BearerAuth: []
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/CreatePost'
+  responses:
+    201:
+      description: 'Created'
+    401:
+      $ref: '#/components/responses/Unauthorized'
+    422:
+      $ref: '#/components/responses/UnprocessableEntity'
+    500:
+      $ref: '#/components/responses/InternalServerError'

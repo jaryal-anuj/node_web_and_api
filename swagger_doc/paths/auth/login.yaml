@@ -1,0 +1,29 @@
+post:
+  tags:
+    - Auth
+  summary: Login the user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          $ref: '#/components/schemas/Login'
+  responses:
+      200:
+        description: 'Created'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token: string
+                expiren_in: string
+            example:
+              token: sdfasdfasdfhsakj
+              expires_in: 3600
+      400:
+         $ref: '#/components/responses/NotFound'
+      422:
+         $ref: '#/components/responses/UnprocessableEntity'
+      500:
+         $ref: '#/components/responses/InternalServerError'

@@ -1,0 +1,31 @@
+<div class="col-sm-4 card">
+		<h2>About Me</h2>
+		<h5>Photo of me:</h5>
+		<div class="fakeimg" id="profile_img_view">
+			<% if(user.profile_image && user.profile_image !=='') { %>
+				<img src="/uploads/user_<%= user.id %>/<%= user.profile_image %>" height="200px;">
+			<% } %>
+		</div>
+		<br>
+		<form onsubmit="return false">
+			<input type="file" id="upload_profile_image">
+		</form>
+		
+		<hr>
+		<br>
+		<ul class="nav nav-pills flex-column">
+			<li class="nav-item">
+			<a class="nav-link active" href="/post/create">Create Post</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="#">Link</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link" href="#">Link</a>
+			</li>
+			<li class="nav-item">
+			<a class="nav-link disabled" href="#">Disabled</a>
+			</li>
+		</ul>
+		<hr class="d-sm-none">
+</div>

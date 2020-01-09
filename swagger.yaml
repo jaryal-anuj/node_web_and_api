@@ -1,0 +1,38 @@
+openapi: 3.0.1
+info:
+  $ref:  ./swagger_doc/info.yaml
+externalDocs:
+  description: Find out more about Swagger
+url: http://swagger.io
+servers:
+ - url: http://localhost:3000/api
+   description: Internal staging server for testing
+ - url: https://localhost:3000/api
+   description: Main (production) server
+paths:
+  /auth/login:
+    $ref: "./swagger_doc/paths/auth/login.yaml"
+  /auth/register:
+    $ref: "./swagger_doc/paths/auth/register.yaml"
+  /post/upload_files:
+    $ref: "./swagger_doc/paths/post/upload_file.yaml"
+  /post/create:
+    $ref: "./swagger_doc/paths/post/create.yaml"
+  /post/edit/{postId}:
+    $ref: "./swagger_doc/paths/post/edit.yaml"
+  /post/show/{postId}:
+    $ref: "./swagger_doc/paths/post/show.yaml"
+  /post/delete/{postId}:
+    $ref: "./swagger_doc/paths/post/delete.yaml"
+  /post/{postId}/comment:
+    $ref: "./swagger_doc/paths/post/comment.yaml"
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  responses:
+    $ref: "./swagger_doc/components/responses.yaml"
+  schemas:
+    $ref: "./swagger_doc/components/schemas.yaml"
