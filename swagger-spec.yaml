@@ -13,9 +13,9 @@ externalDocs:
   description: Find out more about Swagger
 url: 'http://swagger.io'
 servers:
-  - url: 'http://localhost:3000/api'
+  - url: 'http://localhost:3001/api'
     description: Internal staging server for testing
-  - url: 'https://localhost:3000/api'
+  - url: 'https://localhost:3001/api'
     description: Main (production) server
 paths:
   /auth/login:
@@ -66,6 +66,76 @@ paths:
           $ref: '#/components/responses/UnprocessableEntity'
         '500':
           $ref: '#/components/responses/InternalServerError'
+  /auth/gmail_login:
+    post:
+      tags:
+        - Auth
+      summary: Gmail login the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                gmail_id:
+                  type: string
+              required:
+                - gmail_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: string
+                  expiren_in: string
+              example:
+                token: sdfasdfasdfhsakj
+                expires_in: 3600
+        '400':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /auth/fb_login:
+    post:
+      tags:
+        - Auth
+      summary: Facebook login the user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                fb_id:
+                  type: string
+              required:
+                - fb_id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token: string
+                  expiren_in: string
+              example:
+                token: sdfasdfasdfhsakj
+                expires_in: 3600
+        '400':
+          $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
   /post/upload_files:
     post:
       tags:
@@ -85,8 +155,8 @@ paths:
                     type: string
                     format: binary
       responses:
-        '201':
-          description: Created
+        '200':
+          $ref: '#/components/responses/Success'
         '401':
           $ref: '#/components/responses/Unauthorized'
         '422':
@@ -188,8 +258,39 @@ paths:
           required: true
           description: Numeric ID of the post to edit
       responses:
-        '201':
-          description: OK
+        '204':
+          description: No content
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  '/post/{postId}/file/{fileId}':
+    delete:
+      tags:
+        - Post
+      summary: To delete a Post image
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: path
+          name: postId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the post which contains image
+        - in: path
+          name: fileId
+          schema:
+            type: integer
+          required: true
+          description: Numeric ID of the file to delete
+      responses:
+        '204':
+          description: No content
         '401':
           $ref: '#/components/responses/Unauthorized'
         '403':
@@ -232,6 +333,105 @@ paths:
           $ref: '#/components/responses/Forbidden'
         '404':
           $ref: '#/components/responses/NotFound'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /post/user:
+    get:
+      tags:
+        - Post
+      summary: To show a Posts of user
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: To get current page result
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: search keywords in post
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /post:
+    get:
+      tags:
+        - Post
+      summary: To show all posts
+      security:
+        - BearerAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: To get current page result
+        - in: query
+          name: search
+          schema:
+            type: string
+          description: search keywords in post
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /user/upload_profile_image:
+    post:
+      tags:
+        - User
+      summary: To upload profile image of user
+      security:
+        - BearerAuth: []
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '422':
+          $ref: '#/components/responses/UnprocessableEntity'
+        '500':
+          $ref: '#/components/responses/InternalServerError'
+  /user/profile:
+    get:
+      tags:
+        - User
+      summary: To Get user profile data
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          $ref: '#/components/responses/Success'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
         '422':
           $ref: '#/components/responses/UnprocessableEntity'
         '500':
@@ -329,6 +529,10 @@ components:
         password:
           type: string
         confirm_password:
+          type: string
+        gmail_id:
+          type: string
+        fb_id:
           type: string
       required:
         - name

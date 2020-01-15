@@ -16,8 +16,8 @@ post:
                 type: string
                 format: binary
   responses:
-    201:
-      description: 'Created'
+    200:
+      $ref: '#/components/responses/Success'
     401:
       $ref: '#/components/responses/Unauthorized'
     422:

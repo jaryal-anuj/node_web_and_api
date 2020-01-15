@@ -2,13 +2,14 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 
 // Load User model
 const User = require(process.cwd()+'/app/models').user;
+const config = require(process.cwd()+'/config');
 
 module.exports = function(passport) {
     passport.use(new FacebookStrategy(
         {
-            clientID: '2324656061179668',
-            clientSecret: 'a762fab1a79b06736ad95c1f4aa0fbfe',
-            callbackURL: "http://localhost:3000/auth/fb/callback",
+            clientID: config.fb.clientID,
+            clientSecret: config.fb.clientSecret,
+            callbackURL: config.fb.callbackURL,
             profileFields: ['id', 'emails', 'name']
         },
         async (accessToken, refreshToken, profile, done)=>{

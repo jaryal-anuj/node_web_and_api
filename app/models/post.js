@@ -8,8 +8,9 @@ module.exports = (sequelize, DataTypes) => {
   }, {underscored:true});
   post.associate = function(models) {
     // associations can be defined here
-    post.hasMany(models.post_image, {as: 'post_image' })
-    post.hasMany(models.comment)
+	post.hasMany(models.post_image, {as: 'post_image' ,foreignKey:'post_id'})
+	post.belongsTo(models.user)
+    post.hasMany(models.comment,{foreignKey:'post_id'})
   };
   sequelizePaginate.paginate(post)
   return post;

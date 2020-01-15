@@ -11,13 +11,16 @@ const swaggerUi = require('swagger-ui-express');
 const YAML = require('yamljs');
 const swaggerDocument = YAML.load('./swagger-spec.yaml');
 const cors = require('cors');
+const dotEnv = require('dotenv');
+const dotenvExpand = require('dotenv-expand')
 
+const appEnv=dotEnv.config();
+dotenvExpand(appEnv);
 
-require('dotenv').config()
 
 //const oldInput = require('old-input');
 const app = express();
-const port = 3000;
+const port = process.env.PORT||3000;
 // Passport Config
 require('./app/middlewares/auth_strategy/passport_local')(passport);
 require('./app/middlewares/auth_strategy/passport_remember_me')(passport);
@@ -30,6 +33,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.set('layout', 'layouts/app');
 
+
+app.use((req, res, next)=>{
+	req.appUrl = req.protocol + '://' + req.get('host');
+	next();
+})
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

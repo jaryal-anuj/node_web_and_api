@@ -5,15 +5,19 @@ externalDocs:
   description: Find out more about Swagger
 url: http://swagger.io
 servers:
- - url: http://localhost:3000/api
+ - url: http://localhost:3001/api
    description: Internal staging server for testing
- - url: https://localhost:3000/api
+ - url: https://localhost:3001/api
    description: Main (production) server
 paths:
   /auth/login:
     $ref: "./swagger_doc/paths/auth/login.yaml"
   /auth/register:
     $ref: "./swagger_doc/paths/auth/register.yaml"
+  /auth/gmail_login:
+    $ref: "./swagger_doc/paths/auth/gmail_login.yaml"
+  /auth/fb_login:
+    $ref: "./swagger_doc/paths/auth/fb_login.yaml"
   /post/upload_files:
     $ref: "./swagger_doc/paths/post/upload_file.yaml"
   /post/create:
@@ -24,8 +28,18 @@ paths:
     $ref: "./swagger_doc/paths/post/show.yaml"
   /post/delete/{postId}:
     $ref: "./swagger_doc/paths/post/delete.yaml"
+  /post/{postId}/file/{fileId}:
+    $ref: "./swagger_doc/paths/post/delete_file.yaml"
   /post/{postId}/comment:
     $ref: "./swagger_doc/paths/post/comment.yaml"
+  /post/user:
+    $ref: "./swagger_doc/paths/post/user_post.yaml"
+  /post:
+    $ref: "./swagger_doc/paths/post/all_post.yaml"
+  /user/upload_profile_image:
+    $ref: "./swagger_doc/paths/user/upload_image.yaml"
+  /user/profile:
+    $ref: "./swagger_doc/paths/user/user_profile.yaml"
 components:
   securitySchemes:
     BearerAuth:

@@ -1,19 +1,23 @@
-delete:
+get:
   tags:
     - Post
-  summary: To delete a Post
+  summary: To show a Posts of user
   security:
     - BearerAuth: []
   parameters:
-    - in: path
-      name: postId
+    - in: query
+      name: page
       schema:
         type: integer
-      required: true
-      description: Numeric ID of the post to edit
+      description: To get current page result
+    - in: query
+      name: search
+      schema:
+        type: string
+      description: search keywords in post
   responses:
-    204:
-      description: No content
+    200:
+      $ref: '#/components/responses/Success'
     401:
       $ref: '#/components/responses/Unauthorized'
     403:

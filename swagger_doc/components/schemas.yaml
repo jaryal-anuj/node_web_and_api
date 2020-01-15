@@ -48,6 +48,10 @@ Register:
         type: string
       confirm_password:
         type: string
+      gmail_id:
+        type: string
+      fb_id:
+        type: string
   required:
     - name
     - email

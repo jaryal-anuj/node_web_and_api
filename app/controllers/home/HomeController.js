@@ -22,7 +22,7 @@ class HomeController {
 			const { docs, pages, total } = await PostModel.paginate(options);
 			queryData.pages = pages;
 			queryData.total = total;
-	
+
 			res.render('home/index',{user:req.user,posts:docs,query:queryData})
 		}catch(err){
 			next(err);

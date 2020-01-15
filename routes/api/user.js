@@ -12,7 +12,7 @@ const upload = multer({ storage: storage, fileFilter:imageFilter,limits: { fileS
 
 
 router.use('/',passport.authenticate('jwt', {session: false}));
-//router.get('/profile',UserController.profile);
+router.get('/profile',UserController.profile);
 router.post('/upload_profile_image',upload.single('file'),UserController.uploadProfileImage);
 
 module.exports = router;

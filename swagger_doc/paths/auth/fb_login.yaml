@@ -1,0 +1,34 @@
+post:
+  tags:
+    - Auth
+  summary: Facebook login the user
+  requestBody:
+    required: true
+    content:
+      application/json:
+        schema:
+          type: object
+          properties:
+            fb_id:
+              type: string
+          required:
+            - fb_id
+  responses:
+      200:
+        description: 'OK'
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token: string
+                expiren_in: string
+            example:
+              token: sdfasdfasdfhsakj
+              expires_in: 3600
+      400:
+         $ref: '#/components/responses/NotFound'
+      422:
+         $ref: '#/components/responses/UnprocessableEntity'
+      500:
+         $ref: '#/components/responses/InternalServerError'

@@ -1,7 +1,7 @@
 delete:
   tags:
     - Post
-  summary: To delete a Post
+  summary: To delete a Post image
   security:
     - BearerAuth: []
   parameters:
@@ -10,7 +10,13 @@ delete:
       schema:
         type: integer
       required: true
-      description: Numeric ID of the post to edit
+      description: Numeric ID of the post which contains image
+    - in: path
+      name: fileId
+      schema:
+        type: integer
+      required: true
+      description: Numeric ID of the file to delete
   responses:
     204:
       description: No content

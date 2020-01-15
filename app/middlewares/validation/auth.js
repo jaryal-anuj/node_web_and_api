@@ -28,6 +28,28 @@ const SignUpValidate =() =>{
 				}
 				return true;
 			}),
+		body('gmail_id')
+			.custom(value=>{
+				if(value){
+					return User.findOne({ where:{ gmail_id:value } }).then(user=>{
+						if(user){
+							return Promise.reject("This account is already register with us!");
+						}
+					})
+				}
+				return true;
+			}),
+		body('fb_id')
+			.custom(value=>{
+				if(value){
+					return User.findOne({ where:{ gmail_id:value } }).then(user=>{
+						if(user){
+							return Promise.reject("This account is already register with us!");
+						}
+					})
+				}
+				return true;
+			}),
 	];
 
 }
@@ -46,6 +68,22 @@ const SignInValidate =() =>{
 
 }
 
+const GmailValidate =() =>{
+	return [
+		body('gmail_id')
+			.not().isEmpty().withMessage("Gmail id is required !")
+	];
+
+}
+
+const FbValidate =() =>{
+	return [
+		body('fb_id')
+			.not().isEmpty().withMessage("Facebook id is required !")
+	];
+
+}
 
 
-module.exports = { SignUpValidate ,SignInValidate};
+
+module.exports = { SignUpValidate ,SignInValidate, GmailValidate, FbValidate};

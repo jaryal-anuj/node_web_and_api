@@ -2,13 +2,14 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 
 // Load User model
 const User = require(process.cwd()+'/app/models').user;
+const config = require(process.cwd()+'/config');
 
 module.exports = function(passport) {
     passport.use(new GoogleStrategy(
         {
-            clientID: '41860437728-hngcsgpdo10qlkotue8f5do5l9ekr6hl.apps.googleusercontent.com',
-            clientSecret: 'zwwIKLRIt0DpjhPV8quyYawc',
-            callbackURL: "http://localhost:3000/auth/google/callback"
+            clientID: config.gmail.clientID,
+            clientSecret: config.gmail.clientSecret,
+            callbackURL: config.gmail.callbackURL,
         },
         async (accessToken, refreshToken, profile, done)=>{
             //console.log(accessToken, refreshToken, profile,done);

@@ -23,11 +23,14 @@ router.use('/',(req,res,next)=>{
 	})(req,res,next)
 
 });
+router.get('/',PostController.all);
+router.get('/user', PostController.user);
 router.post('/upload_files',PostController.upload_files);
 router.post('/create',createPostValidate(),PostController.create);
 router.put('/edit/:id',createPostValidate(),PostController.edit);
 router.get('/show/:id', PostController.show);
 router.delete('/delete/:id', PostController.delete);
+router.delete('/:postId/file/:fileId', PostController.deletPostImage);
 router.post('/:id/comment', CommentController.store);
 
 module.exports = router;
