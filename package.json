@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx nodemon --inspect app.js",
+    "dev": "npx nodemon --inspect app.js",
+    "start": "node app.js",
     "prod": "pm2 start app.js -i 0 --name 'passport-demo' --watch",
     "swag": "npx swagger-merger -i swagger.yaml -o swagger-spec.yaml",
     "speccy": "npx speccy resolve -v swagger.yaml -o swagger-spec.yaml"
@@ -37,6 +38,8 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "passport-remember-me": "0.0.1",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
     "sequelize": "^5.21.1",
     "sequelize-paginate": "^1.1.6",
     "swagger-ui-express": "^4.1.2",
