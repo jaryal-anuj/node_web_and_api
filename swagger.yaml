@@ -9,6 +9,8 @@ servers:
    description: Internal staging server for testing
  - url: https://localhost:3000/api
    description: Main (production) server
+ - url: https://node-posts-api-web.herokuapp.com/api
+   description: Heroku server
 paths:
   /auth/login:
     $ref: "./swagger_doc/paths/auth/login.yaml"
