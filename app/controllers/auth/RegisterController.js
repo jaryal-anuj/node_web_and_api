@@ -11,7 +11,7 @@ class RegisterController {
 		}catch(err){
 			next(err)
 		}
-		
+
 	}
 
 	async register(req, res, next){
@@ -37,7 +37,7 @@ class RegisterController {
 		}
 	}
 
-	
+
 }
 
 module.exports = new RegisterController();

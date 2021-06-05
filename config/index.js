@@ -5,7 +5,7 @@ module.exports = {
 	jwt:{
 		secret:process.env.JWT_SECRET,
 		expire:process.env.JWT_EXPIRE,
-		expSec:86400,
+		expSec:3600,
 		issuer:process.env.JWT_ISSUER
 	},
 	fb:{

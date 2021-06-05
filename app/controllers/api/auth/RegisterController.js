@@ -10,19 +10,20 @@ class RegisterController {
 			if (!errors.isEmpty()) {
 				return res.status(422).json({code:"Unprocessable Entity",message:"Validation failed",errors:errors.array( {onlyFirstError: true} )});
             }
-
+			//console.log(req.body);
             let {name,email,password,gmail_id,fb_id} = req.body;
 			password = await bcrypt.hash(password,10);
 			await User.create({
 				name:name,
 				email:email,
 				password:password,
-				gmail_id:gmail_id,
-				fb_id:fb_id
+				gmail_id:gmail_id ? gmail_id : null,
+				fb_id:fb_id ? fb_id:null
             })
 
             return res.status(201).json();
         }catch(err){
+			console.log(err);
             next(err);
         }
     }
