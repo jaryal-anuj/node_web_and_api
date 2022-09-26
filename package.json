@@ -48,7 +48,7 @@
   "devDependencies": {
     "ndb": "^1.1.5",
     "nodemon": "^1.19.4",
-    "pm2": "^4.2.1",
+    "pm2": "^5.2.0",
     "sequelize-cli": "^5.5.1",
     "speccy": "^0.11.0",
     "swagger-merger": "^1.4.3"
